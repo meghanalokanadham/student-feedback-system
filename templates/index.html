@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Feedback Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-icon">◈</span>
+                <span>Student Feedback Portal</span>
+            </div>
+            <div class="badge">CSM Dept</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Share Your <span class="accent">Feedback</span></h1>
+            <p class="subtitle">Help us improve your learning experience. Your voice matters.</p>
+        </section>
+
+        <div class="layout">
+            <!-- Feedback Form -->
+            <div class="card form-card">
+                <div class="card-header">
+                    <span class="card-icon">✦</span>
+                    <h2>Submit Feedback</h2>
+                </div>
+                <form action="/submit" method="POST" class="feedback-form">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" placeholder="e.g. Rahul Kumar" required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="feedback">Your Feedback</label>
+                        <textarea id="feedback" name="feedback" rows="4" placeholder="Share your thoughts about the course, labs, or sessions..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <span>Submit Feedback</span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Feedback List -->
+            <div class="card list-card">
+                <div class="card-header">
+                    <span class="card-icon">◎</span>
+                    <h2>Recent Feedback</h2>
+                    <span class="count-badge">{{ feedbacks|length }}</span>
+                </div>
+                <div class="feedback-list">
+                    {% if feedbacks %}
+                        {% for item in feedbacks %}
+                        <div class="feedback-item">
+                            <div class="feedback-meta">
+                                <span class="feedback-author">{{ item.name }}</span>
+                                <span class="feedback-time">{{ item.submitted_at[:10] }}</span>
+                            </div>
+                            <p class="feedback-message">{{ item.message }}</p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty-state">
+                            <span class="empty-icon">◇</span>
+                            <p>No feedback yet. Be the first to share!</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Student Feedback System &nbsp;|&nbsp; DevOps Mini Project &nbsp;|&nbsp; S.Yoganandh · CSM</p>
+    </footer>
+</body>
+</html>
